@@ -11,7 +11,7 @@ import requests
 from bs4 import  BeautifulSoup as bs
 import pandas as pd
 
-#1
+#홍지수
 url='http://corners.auction.co.kr/corner/categorybest.aspx?gender=0&age=0&storetab=0&cc='
 
 response=requests.get(url)
@@ -44,3 +44,35 @@ df=df.set_index('순위')
 pd.set_option('display.max_rows',None)
 pd.set_option('display.max_columns',None)
 print(df)
+
+
+#허경록
+
+abc=int(input('상품의 순위를 입력하세요. '))
+if abc<=0 or abc>=201:
+  print('종료')
+else:
+  url2=h[abc-1]
+  response2=requests.get(url2)
+  y=[]
+  w=[]
+  v=[]
+  if response.status_code==200:
+    html2=response2.text
+    soup2=bs(html2,'html.parser')
+    z=soup2.select('#frmMain > div.prod_info > p.buy_num')
+    for o in z:
+      y.append(o.get_text())
+    x=soup2.select('#ucShippingInfo_btnShippingInfoTitleText')
+    for p in x:
+      w.append(p.get_text())
+    u=soup2.select('#ucItemOriginV1_hdivOrigin > div')
+    for q in u:
+      v.append(q.get_text())
+  else:
+    print(response2.status_code)
+  print(f'{b[abc-1]}위 {d[abc-1]} {f[abc-1]}원')
+  print(y[0])
+  print(w[0].strip('열기'))
+  print(v[0])
+  print(f'바로가기 {h[abc-1]}')
